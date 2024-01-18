@@ -94,9 +94,9 @@ export class SnapcraftBuilder {
     if (snaps.length === 0) {
       throw new Error('No snap files produced by build')
     }
-    if (snaps.length > 1) {
-      core.warning(`Multiple snaps found in ${this.projectRoot}`)
-    }
-    return path.join(this.projectRoot, snaps[0])
+    // if (snaps.length > 1) {
+      // core.warning(`Multiple snaps found in ${this.projectRoot}`)
+    // }
+    return path.join(this.projectRoot, snaps)
   }
 }
