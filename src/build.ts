@@ -87,16 +87,21 @@ export class SnapcraftBuilder {
     return await fs.promises.readdir(dir)
   }
 
-  async outputSnap(): Promise<string> {
+  async outputSnap(): Promise<string | string[]> {
     const files = await this._readdir(this.projectRoot)
     const snaps = files.filter(name => name.endsWith('.snap'))
 
     if (snaps.length === 0) {
       throw new Error('No snap files produced by build')
     }
-    // if (snaps.length > 1) {
-      // core.warning(`Multiple snaps found in ${this.projectRoot}`)
-    // }
-    return path.join(this.projectRoot, snaps)
+    // If there is exactly one snap file, return its path
+    if (snaps.length === 1) {
+      return path.join(this.projectRoot, snaps[0])
+    }
+    // If there are multiple snap files, return an array of their paths
+    if (snaps.length > 1) {
+      core.warning(`Multiple snaps found in ${this.projectRoot}`)
+      return snaps.map(snap => path.join(this.projectRoot, snap))
+    }
   }
 }
