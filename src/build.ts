@@ -100,8 +100,10 @@ export class SnapcraftBuilder {
     }
     // If there are multiple snap files, return an array of their paths
     if (snaps.length > 1) {
-      core.warning(`Multiple snaps found in ${this.projectRoot}`)
-      return snaps.map(snap => path.join(this.projectRoot, snap))
+      const snapPaths = snaps.map(snap => path.join(this.projectRoot, snap))
+      const snapPathsString = snapPaths.join(', ')
+      core.warning(`Multiple snaps found in ${this.projectRoot}: ${snapPathsString}`)
+      return snapPaths
     }
   }
 }
